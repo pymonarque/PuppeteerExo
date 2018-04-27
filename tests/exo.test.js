@@ -11,28 +11,21 @@ beforeAll(async () => {
         args: [`--window-size=${width},${height}`]
       });
     page = await browser.newPage();
+    await page.goto("http://localhost:3000/");
 });
 
 describe("Test the geopardy application", () => {
     
     test("make sure page title is React App", async () => {
-      await page.goto("http://localhost:3000/");
       const pageTitle = await page.title();
       expect(pageTitle).toBe("React App");
     }, 16000);
 
-    /*
-    test("make sure top stories shows", async () => {
-    
-        await page.click("#hplogo")
-        await page.waitForSelector('.zQlLed');
-        let content = await page.$eval(".zQlLed", (el) =>{
-            return el.innerHTML
-        })
-        // console.log(content, "eric")
-        expect(content).toBe("Top stories");
-      }, 16000);
-      */
+    test("verify qeustion appears", async () => {
+        const question = await page.$("#question");
+        expect(question).not.toBe(null);
+    }, 16000);
+
 });
     
 
